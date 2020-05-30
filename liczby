@@ -1,0 +1,74 @@
+#include <iostream>
+#include <fstream>
+
+using namespace std;
+
+int w;
+
+bool dwa(string x)
+{
+	if(x[x.size()-1]=='0')
+		return true;
+	return false;
+}
+
+bool osiem(string x)
+{
+	if(x[x.size()-1]=='0' && x[x.size()-2]=='0' && x[x.size()-3]=='0')
+		return true;
+	return false;
+}
+
+int main()
+{
+    fstream liczby;
+
+    liczby.open("liczby.txt", ios::in);
+
+    cout<<"co chcesz zrobic?"<<endl<<"1. ile liczb w z pliku ma w swoim zapisie binarnym wiêcej zer ni¿ jedynek"<<endl<<"2. podaj ile liczb w pliku jest podzielnych przez 2 oraz ile przez 8"<<endl;
+
+    cin>>w;
+
+    switch(w)
+    {
+
+case 1:
+    {
+    int ile0=0;
+    double rozmiar;
+    while(liczby.good())
+    {
+        string linia;
+        liczby>>linia;
+        string s=linia;
+        char znak='0';
+        int zero=0;
+        string str(linia);
+        rozmiar=str.size();
+        for (int i=0;(i=s.find(znak,i))!=string::npos;i++) zero++;
+        if(zero>=rozmiar/2) ile0++;
+    }
+    cout<<endl<<"liczba liczb, ktore w zapisie binarnym maja wiecej zer niz jedynek: "<<ile0<<endl;
+    }
+    break;
+case 2:
+    {
+    int ile2=0, ile8=0;
+    while(liczby.good())
+    {
+        string linia;
+        liczby>>linia;
+        string s=linia;
+        if(dwa(linia)!=0) ile2++;
+        if(osiem(linia)!=0) ile8++;
+    }
+    cout<<endl<<"liczba liczb podzielnych przez 2: "<<ile2<<endl<<"liczba liczb podzielnych przez 8: "<<ile8<<endl;
+    }
+    break;
+default: cout<<"blad"<<endl;
+    }
+
+    liczby.close();
+
+    return 0;
+}
